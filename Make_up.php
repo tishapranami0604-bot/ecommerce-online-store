@@ -3120,7 +3120,7 @@
 
 
 
-    <!-- <footer class="footer">
+    <footer class="footer">
         <div class="footer-container">
             <div class="footer-section about">
                 <h2>Mens</h2>
@@ -3165,7 +3165,7 @@
         <div class="footer-bottom">
             <p>&copy; 2025 ShopMate. All rights reserved.</p>
         </div>
-    </footer> -->
+    </footer>
 
     <!-- <* side bar java script -->
 
