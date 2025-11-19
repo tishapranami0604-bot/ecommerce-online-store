@@ -1,73 +1,131 @@
 <?php
+session_start();
 
-$servername = "localhost"; // Change if your database is hosted elsewhere
-$username = "root"; // Change this if using a different MySQL user
-$password = ""; // Change if you have set a password
-$database = "onlinestore"; // Your database name
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "onlinestore";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
- 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize input data
+
     $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
     $password = $_POST["password"];
     $address = trim($_POST["address"]);
     $phone = trim($_POST["phone"]);
 
-    // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error = "Invalid email format.";
+        header("Location: register.html?error=Invalid+email+format");
+        exit();
     }
 
-    // Validate phone number (simple example, adjust pattern as needed)
     if (!preg_match("/^\+?[0-9]{10,15}$/", $phone)) {
-        $error = "Invalid phone number.";
+        header("Location: register.html?error=Invalid+phone+number");
+        exit();
     }
 
-    // Check if email already exists
-    if (!isset($error)) {
-        $check_email = $conn->prepare("SELECT * FROM users1 WHERE email = ?");
-        $check_email->bind_param("s", $email);
-        $check_email->execute();
-        $result = $check_email->get_result();
+    $check_email = $conn->prepare("SELECT * FROM users1 WHERE email = ?");
+    $check_email->bind_param("s", $email);
+    $check_email->execute();
+    $result = $check_email->get_result();
 
-        if ($result->num_rows > 0) {
-            $error = "Email is already registered!";
-        }
+    if ($result->num_rows > 0) {
+        header("Location: register.html?error=Email+already+registered");
+        exit();
     }
 
-    // If no errors, hash the password and insert into the database
-    if (!isset($error)) {
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-        // Use prepared statement to insert the data
-        $stmt = $conn->prepare("INSERT INTO users1 (name, email, password, address, phone) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $name, $email, $hashed_password, $address, $phone);  // Bind all parameters
+    $stmt = $conn->prepare("INSERT INTO users1 (name, email, password, address, phone) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $name, $email, $hashed_password, $address, $phone);
 
-        if ($stmt->execute()) {
-            $_SESSION["user_id"] = $stmt->insert_id;
-            $_SESSION["user_name"] = $name;
-            header("Location: login.php");
-            exit();
-        } else {
-            $error = "Registration failed! Please try again.";
-        }
+    if ($stmt->execute()) {
+        header("Location: login.html?success=Account+created+successfully");
+        exit();
+    } else {
+        header("Location: register.html?error=Registration+failed");
+        exit();
     }
 }
 ?>
 
 
-<!DOCTYPE html>
+<!-- <?php
+
+// $servername = "localhost"; // Change if your database is hosted elsewhere
+// $username = "root"; // Change this if using a different MySQL user
+// $password = ""; // Change if you have set a password
+// $database = "onlinestore"; // Your database name
+
+// // Create connection
+// $conn = new mysqli($servername, $username, $password, $database);
+
+// // Check connection
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
+
+
+ 
+
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     // Sanitize input data
+//     $name = trim($_POST["name"]);
+//     $email = trim($_POST["email"]);
+//     $password = $_POST["password"];
+//     $address = trim($_POST["address"]);
+//     $phone = trim($_POST["phone"]);
+
+//     // Validate email format
+//     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//         $error = "Invalid email format.";
+//     }
+
+//     // Validate phone number (simple example, adjust pattern as needed)
+//     if (!preg_match("/^\+?[0-9]{10,15}$/", $phone)) {
+//         $error = "Invalid phone number.";
+//     }
+
+//     // Check if email already exists
+//     if (!isset($error)) {
+//         $check_email = $conn->prepare("SELECT * FROM users1 WHERE email = ?");
+//         $check_email->bind_param("s", $email);
+//         $check_email->execute();
+//         $result = $check_email->get_result();
+
+//         if ($result->num_rows > 0) {
+//             $error = "Email is already registered!";
+//         }
+//     }
+
+//     // If no errors, hash the password and insert into the database
+//     if (!isset($error)) {
+//         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+//         // Use prepared statement to insert the data
+//         $stmt = $conn->prepare("INSERT INTO users1 (name, email, password, address, phone) VALUES (?, ?, ?, ?, ?)");
+//         $stmt->bind_param("sssss", $name, $email, $hashed_password, $address, $phone);  // Bind all parameters
+
+//         if ($stmt->execute()) {
+//             $_SESSION["user_id"] = $stmt->insert_id;
+//             $_SESSION["user_name"] = $name;
+//             header("Location: login.php");
+//             exit();
+//         } else {
+//             $error = "Registration failed! Please try again.";
+//         }
+//     }
+// }
+?> -->
+
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -223,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li class="nav-item"><a class="nav-link text-white" href="products.html">Products</a></li>
 
                     <?php if (isset($_SESSION["user_id"])): ?>
-                        <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
                     <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
@@ -261,13 +319,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit" class="btn btn-register w-100">Register</button>
         </form>
-        <p class="text-light mt-3"> <a href="login.php">Login</a></p>
+        <p class="text-light mt-3">Already have an account? <a href="login.php">Login</a></p>
     </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<!-- </body>
 
-</html>
+</html> -->
 
 
