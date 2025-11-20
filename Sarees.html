@@ -403,7 +403,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">E-Shop</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -421,17 +421,67 @@
                     </li>
 
 
-                    <?html if (isset($_SESSION["user_id"])): ?>
+                    <?php if (isset($_SESSION["user_id"])): ?>
                         <li class="nav-item"><a class="nav-link" href="./auth/profile.html">Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="./auth/logout.php">Logout</a></li>
-                    <?html else: ?>
+                    <?php else: ?>
                         <li class="nav-item"><a class="nav-link" href="./auth/login.php">Login</a></li>
                         <li class="nav-item"><a class="nav-link" href="./auth/register.php">Register</a></li>
                     <?html endif; ?>
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">E-Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+               
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="cart.html">
+                        🛒 Cart (<span id="cart-count">0</span>)
+                    </a>
+                </li>
+
+                <span id="auth-links"></span>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // simulate session using localStorage
+    const userLoggedIn = localStorage.getItem("user_id"); 
+
+    const authLinks = document.getElementById("auth-links");
+
+    if (userLoggedIn) {
+        authLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="./auth/view.php">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="logout()">Logout</a></li>
+        `;
+    } else {
+        authLinks.innerHTML = `
+            <li class="nav-item"><a class="nav-link" href="./auth/login.html">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="./auth/register.html">Register</a></li>
+        `;
+    }
+
+    function logout() {
+        localStorage.removeItem("user_id");
+        location.reload();
+    }
+</script>
+
+
+
 
     <div class="navvv">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -482,7 +532,7 @@
                             Kids
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="Womens.html">Boys & Girls 2+ Years</a></li>
+                            <li><a class="dropdown-item" href="Babys.html">Boys & Girls 2+ Years</a></li>
                             <li><a class="dropdown-item" href="Infant.html">Infant 0-2 Years</a></li>
                             <li><a class="dropdown-item" href="Assessories.html">Accessories</a></li>
                             <li><a class="dropdown-item" href="Baby_care.html">Baby Care</a></li>
@@ -497,7 +547,7 @@
                             Home & Kitchen
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="Womens.html">Kitchen & Appliances</a></li>
+                            <li><a class="dropdown-item" href="Kitchen.html">Kitchen & Appliances</a></li>
                             <li><a class="dropdown-item" href="Home.html">Home Furnishing</a></li>
                             <li><a class="dropdown-item" href="Ho_decor.html">Home Decor</a></li>
                             <li><a class="dropdown-item" href="Kitchen.html">Kitchen & Dining</a></li>
@@ -512,7 +562,7 @@
                             Beauty
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="Womens.html">Make Up</a></li>
+                            <li><a class="dropdown-item" href="Make_up.html">Make Up</a></li>
                             <li><a class="dropdown-item" href="Skin.care.html">SkinCare</a></li>
                             <li><a class="dropdown-item" href="Babys.html">Baby & Mom</a></li>
                             <li><a class="dropdown-item" href="Mens_care.html">MensCare</a></li>
@@ -526,7 +576,7 @@
                             Bags
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="Womens.html">Hand Bags</a></li>
+                            <li><a class="dropdown-item" href="Hand_bags.html">Hand Bags</a></li>
                             <li><a class="dropdown-item" href="School_bags.html">School Bags</a></li>
                             <li><a class="dropdown-item" href="Travel_bags.html">Travel Bags</a></li>
                             <li><a class="dropdown-item" href="Backpacks.html">Backpacks</a></li>
@@ -543,7 +593,7 @@
                             Electronic
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="Womens.html">Headphones</a></li>
+                            <li><a class="dropdown-item" href="Headphones.html">Headphones</a></li>
                             <li><a class="dropdown-item" href="Speakers.html">Speakers</a></li>
                             <li><a class="dropdown-item" href="Smart_wa.html">Smartwatches</a></li>
                             <li><a class="dropdown-item" href="Mobile_ho.html">Mobile Holders</a></li>
