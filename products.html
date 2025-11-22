@@ -3,185 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>All Products</title>
 
-    <script src="product.js"></script>
+    <script src="products.js"></script>
 
     <style>
-        /* Smooth Modern Look */
         body {
-            font-family: "Poppins", Arial, sans-serif;
+            font-family: Poppins, sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #f7f7f7, #ececec);
+            background: #f5f5f5;
         }
 
-        .container {
-            padding: 15px;
+        h2 {
+            text-align: center;
+            padding: 15px 0;
         }
 
-        /* Product Image */
-        .product-img {
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .product-card {
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: .2s;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .product-card img {
             width: 100%;
-            border-radius: 18px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
         .product-title {
-            font-size: 24px;
+            font-size: 15px;
             font-weight: 600;
-            margin-top: 12px;
-            color: #333;
-            line-height: 1.4;
+            margin: 8px 0 5px;
+            height: 40px;
+            overflow: hidden;
         }
 
         .price-box {
-            margin-top: 10px;
-            font-size: 22px;
+            font-size: 16px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         .discount-price {
-            color: #ff0077;
-            font-weight: 700;
+            color: #e6007e;
         }
 
         .original-price {
             text-decoration: line-through;
-            color: #888;
-            font-size: 18px;
-        }
-
-        /* Modern Glass Card */
-        .details-box, .reviews {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(6px);
-            padding: 18px;
-            border-radius: 14px;
-            margin-top: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            color: #777;
+            margin-left: 5px;
+            font-size: 14px;
         }
 
         .rating {
-            margin-top: 8px;
-            font-size: 20px;
-            background: #fff8e6;
-            padding: 6px 12px;
+            background: #fff3cd;
+            padding: 4px 8px;
+            margin-top: 6px;
             width: fit-content;
-            border-radius: 8px;
-            color: #ff9500;
-            font-weight: 600;
+            border-radius: 6px;
+            font-size: 13px;
         }
 
-        /* Review box */
-        .review-box {
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
+        .delivery {
+            color: green;
+            font-size: 12px;
+            margin-top: 4px;
         }
 
-        .reviewer {
-            font-weight: 600;
-            color: #222;
-            margin-bottom: 6px;
-        }
-
-        /* Bottom Bar – Premium Gradient */
-        .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #ffffffcc;
-            backdrop-filter: blur(6px);
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid #ddd;
-        }
-
-        .btn-cart, .btn-buy {
-            width: 48%;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 17px;
+        .btn-view {
+            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
             border: none;
+            border-radius: 8px;
+            background: #ff007e;
             color: white;
-            font-weight: 600;
+            font-size: 15px;
             cursor: pointer;
-            transition: 0.2s ease-in-out;
+            transition: .2s;
         }
-
-        .btn-cart {
-            background: linear-gradient(135deg, #ff5ccf, #ff0099);
-        }
-        .btn-cart:hover {
-            opacity: 0.9;
-        }
-
-        .btn-buy {
-            background: linear-gradient(135deg, #ff0066, #d40057);
-        }
-        .btn-buy:hover {
-            opacity: 0.9;
+        .btn-view:hover {
+            opacity: .9;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <h2>All Products</h2>
 
-        <img id="productImg" class="product-img" src="" alt="">
-
-        <h2 id="productName" class="product-title"></h2>
-
-        <div class="price-box">
-            <span id="productPrice" class="discount-price"></span>
-            <span id="productOldPrice" class="original-price"></span>
-        </div>
-
-        <div id="productRating" class="rating"></div>
-
-        <div class="details-box">
-            <p id="productFabric"></p>
-            <p id="productColor"></p>
-        </div>
-
-        <div class="reviews">
-            <h3 style="margin-bottom: 10px;">Customer Reviews</h3>
-
-            <div class="review-box">
-                <p class="reviewer">Riya Sharma ★★★★☆</p>
-                <p>Good quality product, same as shown!</p>
-            </div>
-
-            <div class="review-box">
-                <p class="reviewer">Pooja Patel ★★★★★</p>
-                <p>Super comfortable and best for daily use.</p>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="bottom-bar">
-        <button class="btn-cart">Add to Cart</button>
-        <button class="btn-buy">Buy Now</button>
-    </div>
+    <div class="product-grid" id="productGrid"></div>
 
     <script>
-        const url = new URLSearchParams(window.location.search);
-        const id = url.get("id");
-        const p = PRODUCTS[id];
+        const container = document.getElementById("productGrid");
 
-        document.getElementById("productImg").src = p.img;
-        document.getElementById("productName").textContent = p.name;
-        document.getElementById("productPrice").textContent = "₹" + p.price;
-        document.getElementById("productOldPrice").textContent = "₹" + p.oldPrice;
-        document.getElementById("productRating").textContent = "⭐ " + p.rating;
-        document.getElementById("productFabric").textContent = "Fabric: " + p.fabric;
-        document.getElementById("productColor").textContent = "Color: " + p.color;
+        Object.values(PRODUCTS).forEach(p => {
+            const card = `
+                <div class="product-card">
+                    <a href="product.html?id=${p.id}">
+                        <img src="${p.img}" alt="${p.name}">
+                    </a>
+
+                    <h4 class="product-title">${p.name}</h4>
+
+                    <div class="price-box">
+                        <span class="discount-price">₹${p.price}</span>
+                        <span class="original-price">₹${p.oldPrice}</span>
+                    </div>
+
+                    <p class="delivery">Free Delivery</p>
+                    <div class="rating">⭐ ${p.rating}</div>
+
+                    <a href="product.html?id=${p.id}">
+                        <button class="btn-view">View</button>
+                    </a>
+                </div>
+            `;
+
+            container.innerHTML += card;
+        });
     </script>
 
 </body>
